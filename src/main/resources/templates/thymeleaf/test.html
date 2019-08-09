@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+	用户姓名：<input th:id="${user.name}"  th:name="${user.name}" th:value="${user.name}"/>
+	<br/>
+	用户年龄：<input th:value="${user.age}"/>
+	<br/>
+	用户生日：<input th:value="${user.birthday}"/>
+	<br/>
+	用户生日：<input th:value="${#dates.format(user.birthday, 'yyyy-MM-dd')}"/>
+	<br/>
+</div>
+
+<br/>
+
+<div th:object="${user}">
+	用户姓名：<input th:field="*{name}" /> <!-- th:fiele=th:id、th：name 和 th：value -->
+	<br/>
+	用户年龄：<input th:value="*{age}"/>
+	<br/>
+	用户生日：<input th:value="*{#dates.format(birthday, 'yyyy-MM-dd hh:mm:ss')}"/>
+	<br/>
+</div>
+
+<br/>
+
+<form th:action="@{/th/postform}" th:object="${user}" method="post" th:method="post">
+    <input type="text" th:field="*{name}"/>
+    <input type="text" th:field="*{age}"/>
+    <input type="submit"/>
+</form>
+<br/>
+
+text 与 utext ：<br/>
+<span th:text="${user.desc}">abc</span>
+<br/>
+<span th:utext="${user.desc}">abc</span>
+<br/>
+<br/>
+URL：<a th:href="@{http://www.bing.com}">网站网址 </a>
+<br/>
+<br/>
+<select>
+     <option >选择框</option>
+     <option th:selected="${user.name eq 'lee'}">lee</option>
+     <option th:selected="${user.name eq 'lijie'}">lijie</option>
+     <option th:selected="${user.name eq 'LeeCX'}">LeeCX</option>
+</select>
+<br/>
+<br/>
+<table>
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>年龄备注</th>
+        <th>生日</th>
+    </tr>
+    <tr th:each="person:${userList}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.age}"></td>
+        <td th:text="${person.age gt 18} ? 你老了 : 你很年轻">18岁</td>
+        <td th:text="${#dates.format(user.birthday, 'yyyy-MM-dd hh:mm:ss')}"></td>
+    </tr>
+</table>
+<br/>
+</body>
+</html>
